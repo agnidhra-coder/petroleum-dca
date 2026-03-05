@@ -20,7 +20,7 @@ pip install -r requirements.txt
 python app.py
 ```
 
-Open http://localhost:5050 in your browser. Upload a CSV or use the built-in sample data.
+Open [this link](https://petroleum-dca.onrender.com/) in your browser. Upload a CSV or use the built-in sample data.
 
 ### CLI
 
@@ -69,11 +69,3 @@ dca/
 ├── requirements.txt
 └── render.yaml         # Render deployment config
 ```
-
-## Deployment (Render)
-
-1. Push this repo to GitHub
-2. On [Render](https://render.com), create a new **Web Service** and connect the repo
-3. Render auto-detects `render.yaml`, or configure manually:
-   - **Build Command:** `pip install -r requirements.txt`
-   - **Start Command:** `gunicorn app:app`
