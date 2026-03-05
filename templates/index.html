@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DCA - Decline Curve Analysis</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <div>
+            <h1><span>DCA</span> Decline Curve Analysis</h1>
+        </div>
+        <div class="subtitle">Arps' Decline Models &middot; EUR Calculator</div>
+    </header>
+
+    <div class="container">
+        <!-- Controls -->
+        <div class="controls">
+            <div class="control-group file-upload">
+                <label>Production CSV</label>
+                <input type="file" id="csvFile" accept=".csv">
+                <div class="file-label" id="fileLabel">Drop CSV or click to browse</div>
+            </div>
+            <div class="control-group">
+                <label>Rate Column</label>
+                <select id="rateColumn">
+                    <option value="oil_rate_bopd">oil_rate_bopd</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label>Forecast (years)</label>
+                <input type="number" id="forecastYears" value="10" min="1" max="50" step="1">
+            </div>
+            <div class="control-group">
+                <label>Economic Limit (BOPD)</label>
+                <input type="number" id="econLimit" value="10" min="1" max="1000" step="1">
+            </div>
+            <button class="btn" id="analyzeBtn" onclick="runAnalysis()">Analyze</button>
+        </div>
+
+        <div class="error-msg" id="errorMsg"></div>
+
+        <!-- Empty State -->
+        <div class="empty-state" id="emptyState">
+            <h2>Upload production data or use sample data</h2>
+            <p>Click Analyze to run DCA with the built-in sample well data, or upload your own CSV with a date column and rate columns.</p>
+        </div>
+
+        <!-- Loading -->
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            Fitting decline curves...
+        </div>
+
+        <!-- Results -->
+        <div id="results">
+            <!-- Model Cards -->
+            <div class="results-grid" id="modelCards"></div>
+
+            <!-- Charts -->
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <h3>Decline Curve Fits</h3>
+                    <div class="chart-container">
+                        <canvas id="fitsChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <h3>Model Comparison</h3>
+                    <div class="chart-container">
+                        <canvas id="comparisonChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card full">
+                    <h3>Production Forecast</h3>
+                    <div class="chart-container tall">
+                        <canvas id="forecastChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card full">
+                    <h3>Cumulative Production</h3>
+                    <div class="chart-container">
+                        <canvas id="cumulativeChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
